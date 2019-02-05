@@ -82,4 +82,11 @@ describe('#request', function () {
 
     expect(() => this.rt.request('meow')).to.throw(Error, 'boom');
   });
+
+  it('several arguments', function () {
+    this.rt.on('concat', (...strs) => strs.length ? strs[0].concat(...strs.slice(1)) : '');
+
+    const result = this.rt.request('concat', 'meow', 'bark', 'oink');
+    expect(result).to.be.a('string').and.equal('meowbarkoink');
+  });
 });

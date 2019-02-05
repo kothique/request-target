@@ -8,8 +8,8 @@ export default class RequestTarget {
   }
 
   /**
-   * @param {string} subject
-   * @param {any => any} handler
+   * @param {string}          subject
+   * @param {(...any) => any} handler - May return a Promise.
    * @return {this}
    */
   on(subject, handler) {
@@ -21,8 +21,8 @@ export default class RequestTarget {
   }
 
   /**
-   * @param {string} subject
-   * @param {any => any} handler
+   * @param {string}          subject
+   * @param {(...any) => any} handler - May return a Promise.
    * @return {this}
    */
   off(subject, handler) {
@@ -39,17 +39,17 @@ export default class RequestTarget {
 
   /**
    * @param {string} subject
-   * @param {any}    data
+   * @param {any[]}  args
    * @return {any} - Return undefined, if there are no request handlers.
    */
-  request(subject, data) {
+  request(subject, ...args) {
     const handlers = this._handlers[subject];
     if (!handlers || handlers.length === 0) {
       return;
     }
 
     for (const handler of handlers) {
-      const result = handler(data);
+      const result = handler(...args);
       if (typeof result !== 'undefined') {
         return result;
       }
