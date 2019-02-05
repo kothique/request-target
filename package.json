@@ -16,7 +16,8 @@
     "url": "https://github.com/kothique/request-target/issues"
   },
   "keywords": [
-    "events"
+    "events",
+    "requests"
   ],
   "author": "Kothique Félixx <kothique@protonmail.ch>",
   "license": "WTFPL",
