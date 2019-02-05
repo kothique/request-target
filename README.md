@@ -62,5 +62,4 @@ are no handlers at all, returns undefined.
 
 ## TODO
 
-- Some unit tests
 - Allow handlers to receive many arguments
