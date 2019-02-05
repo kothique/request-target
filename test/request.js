@@ -46,6 +46,10 @@ describe('#request', function () {
     }
   });
 
+  it('no handlers at all', function () {
+    expect(this.rt.request('unknown subject')).to.be.undefined;
+  });
+
   it('several handlers with no result', function () {
     this.rt.on('meow', () => {});
     this.rt.on('meow', () => {});
