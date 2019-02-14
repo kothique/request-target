@@ -34,7 +34,33 @@ try {
 
 #### Class: RequestTarget
 
-##### `new RequestTarget()`
+##### `new RequestTarget(options = {})`
+
+- `options.callAllHandlers` `boolean?` `default: false` If true, call all handlers even if a result was received.
+- `options.byRequest` `object?` The same options, but for specific requests.
+
+```js
+/* All request handlers will be evaluated except for 'first-response' request. */
+const rt = new RequestTarget({
+  callAllHandlers: true,
+  byRequest: {
+    'first-response': { callAllHandlers: false }
+  }
+});
+```
+
+##### `setOptions(options): this`
+
+- `options` `object`
+
+Shallow merge a given options object with global options.
+
+##### `setOptions(subject, options): this`
+
+- `subject` `string` Request subject.
+- `options` `object`
+
+Shallow merge a given options object for the request with a given subject.
 
 ##### `on(subject, handler): this`
 
