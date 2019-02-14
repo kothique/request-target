@@ -51,16 +51,16 @@ const rt = new RequestTarget({
 
 ##### `setOptions(options): this`
 
-- `options` `object`
+- `options` `object` Global options.
 
 Shallow merge a given options object with global options.
 
 ##### `setOptions(subject, options): this`
 
 - `subject` `string` Request subject.
-- `options` `object`
+- `options` `object` Request options.
 
-Shallow merge a given options object for the request with a given subject.
+Shallow merge a given options object with the options of the request with a given subject.
 
 ##### `on(subject, handler): this`
 
@@ -83,5 +83,5 @@ Remove a given request type's handler.
 
 Return the result of the request on success, or throw an error. If there are
 multiple request handlers, they will be evaluated until the first defined value
-is returned or an error is thrown. If all handlers return undefined, or there
-are no handlers at all, returns undefined.
+is returned or an error is thrown (unless `options.callAllHandlers` is set to `true`).
+If all handlers return `undefined`, or there are no handlers at all, returns `undefined`.
