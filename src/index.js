@@ -3,9 +3,21 @@ if (!global._babelPolyfill) {
 }
 
 export default class RequestTarget {
+  /**
+   * @param {object?}  options
+   * @param {boolean?} options.callAllHandlers
+   * @param {boolean?} options.getAllResults
+   * @param {boolean?} options.autoPromiseAll
+   * @param {object?}  options.byRequest
+   * @param {boolean?} options.byRequest.{string}.callAllHandlers
+   * @param {boolean?} options.byRequest.{string}.getAllResults
+   * @param {boolean?} options.byRequest.{string}.autoPromiseAll
+   */
   constructor(options = {}) {
     this._options = {
       callAllHandlers: typeof options.callAllHandlers === 'boolean' ? options.callAllHandlers : false,
+      getAllResults: typeof options.getAllResults === 'boolean' ? options.getAllResults : false,
+      autoPromiseAll: typeof options.autoPromiseAll === 'boolean' ? options.autoPromiseAll : true,
       byRequest: options.byRequest || {}
     };
     this._handlers = {};
@@ -15,6 +27,7 @@ export default class RequestTarget {
    * @param {string} subject
    * @param {string} option
    * @return {any}
+   * @private
    */
   _getRequestOption(subject, option) {
     const options = this._options.byRequest[subject] || {};
@@ -90,6 +103,24 @@ export default class RequestTarget {
     }
 
     const callAllHandlers = this._getRequestOption(subject, 'callAllHandlers');
+    const getAllResults = this._getRequestOption(subject, 'getAllResults');
+    const autoPromiseAll = this._getRequestOption(subject, 'autoPromiseAll');
+
+    if (getAllResults) {
+      const results = [];
+      let anyPromise = false
+
+      handlers.forEach(handler => {
+        const result = handler(...args);
+        results.push(result);
+
+        if (typeof result === 'object' && typeof result.then === 'function') {
+          anyPromise = true;
+        }
+      });
+
+      return anyPromise && autoPromiseAll ? Promise.all(results) : results;
+    }
 
     let result = undefined;
     for (const handler of handlers) {

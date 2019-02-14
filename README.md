@@ -1,4 +1,4 @@
-request-target
+@kothique/request-target
 ============
 
 It's like EventEmitter or EventTarget, but RequestTarget :}
@@ -36,7 +36,9 @@ try {
 
 ##### `new RequestTarget(options = {})`
 
-- `options.callAllHandlers` `boolean?` `default: false` If true, call all handlers even if a result was received.
+- `options.callAllHandlers` `boolean?` `default: false` If `true`, call all handlers even if a result was received.
+- `options.getAllResults` `boolean?` `default: false` If `true`, results from all handlers are returned as an array on a request. Also, setting this option as `true` makes `options.callAllHandlers` `true` automatically.
+- `options.autoPromiseAll` `boolean?` `default: true` If `true` and `options.getAllResults` is `true`, automatically applies `Promise.all` to the result of `RequestTarget#request` if there are any promises.
 - `options.byRequest` `object?` The same options, but for specific requests.
 
 ```js
@@ -81,7 +83,10 @@ Remove a given request type's handler.
 - `subject` `string` The name of the request to send.
 - `args` `any[]` Payload to send with the request.
 
-Return the result of the request on success, or throw an error. If there are
+Returns the result of the request on success, or throws an error. If there are
 multiple request handlers, they will be evaluated until the first defined value
 is returned or an error is thrown (unless `options.callAllHandlers` is set to `true`).
-If all handlers return `undefined`, or there are no handlers at all, returns `undefined`.
+If `options.getAllResults` is `true`, all results will be returned as an array; also, if
+`options.autoPromiseAll` is `true` and there is at least one promise returned from a handler,
+`Promise.all` will be automatically applie to the resulting array. If all handlers return `undefined`,
+or there are no handlers at all, returns `undefined`.
