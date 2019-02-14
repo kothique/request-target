@@ -3,6 +3,7 @@
   "version": "2.3.0",
   "description": "It's like EventEmitter or EventTarget, but RequestTarget :}",
   "main": "dist/index.js",
+  "public": true,
   "scripts": {
     "start": "npx babel src --out-dir dist --source-maps true --watch",
     "build": "npx babel src --out-dir dist --source-maps true --env-name production",
