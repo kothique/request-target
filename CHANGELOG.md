@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.3
+
+- Remove all dependencies.
+
 ## 2.3.0
 
 - Add `getAllResults` option.

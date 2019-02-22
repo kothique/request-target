@@ -1,9 +1,8 @@
 {
   "name": "@kothique/request-target",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "It's like EventEmitter or EventTarget, but RequestTarget :}",
   "main": "dist/index.js",
-  "public": true,
   "scripts": {
     "dev": "npx gulp dev",
     "build": "npx gulp build",
