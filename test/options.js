@@ -1,4 +1,4 @@
-import RequestTarget from '../src';
+const RequestTarget = require('../src');
 
 describe('options', function () {
   it('options.callAllHandlers is false', function () {
@@ -117,15 +117,14 @@ describe('options', function () {
     expect(result).to.eql([1, 3, 5]);
   })
 
-  it('options.getAllResults with asynchronous results and options.autoPromiseAll', async function () {
+  it('options.getAllResults with asynchronous results and options.autoPromiseAll', function () {
     this.rt = new RequestTarget({ getAllResults: true, autoPromiseAll: true });
 
     this.rt.on('boom', () => Promise.resolve(1));
     this.rt.on('boom', () => Promise.resolve(3));
     this.rt.on('boom', () => Promise.resolve(5));
 
-    const result = await this.rt.request('boom');
-    expect(result).to.eql([1, 3, 5]);
+    return expect(this.rt.request('boom')).to.eventually.eql([1, 3, 5]);
   });
 
   it('options.getAllResults with asynchronous results and options.autoPromiseAll as false', function () {

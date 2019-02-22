@@ -1,4 +1,4 @@
-import RequestTarget from '../src';
+const RequestTarget = require('../src');
 
 describe('#request', function () {
   beforeEach(function () {
@@ -17,33 +17,36 @@ describe('#request', function () {
     expect(() => this.rt.request('attain enlightenment')).to.throw();
   });
 
-  it('asynchronous succeeding handler', async function () {
+  it('asynchronous succeeding handler', function () {
     this.rt.on('categories', ({ limit = undefined }) => new Promise(resolve =>
       setTimeout(() => resolve({ videos: ['milf', 'anal', 'young', 'feet'].slice(0, limit) }))
     ));
 
-    const result = await this.rt.request('categories', { limit: 2 });
-    expect(result).to.be.an('object').and.have.property('videos');
-    expect(result.videos).to.be.an('array').and.have.ordered.members(['milf', 'anal']);
+    return expect(this.rt.request('categories', { limit: 2 })).to.eventually
+      .be.an('object').and.have.property('videos')
+      .which.is.an('array').and.has.ordered.members(['milf', 'anal']);
   });
 
-  it('asynchronous failing handler', async function () {
+  it('asynchronous failing handler', function (done) {
     this.rt.on('videos', ({ category }) => new Promise((resolve, reject) =>
       setTimeout(() => {
         if (!['milf', 'anal', 'young', 'feet'].includes(category)) {
           reject(new Error('not found'));
         }
 
-        return 'some stuff...';
+        resolve('some stuff');
       })
     ));
 
-    try {
-      await this.rt.request('videos', { category: 'trans' });
-    } catch (error) {
-      expect(error).to.be.an('error');
-      expect(error.message).to.be.an('string').equal('not found');
-    }
+    this.rt.request('videos', { category: 'trans' })
+      .then(
+        () => done(new Error('should have failed')),
+        error => {
+          expect(error).to.be.an('error')
+            .and.have.property('message').equal('not found');
+          done();
+        }
+      );
   });
 
   it('no handlers at all', function () {

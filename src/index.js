@@ -1,8 +1,4 @@
-if (!global._babelPolyfill) {
-  require('@babel/polyfill');
-}
-
-export default class RequestTarget {
+class RequestTarget {
   /**
    * @param {object?}  options
    * @param {boolean?} options.callAllHandlers
@@ -43,16 +39,13 @@ export default class RequestTarget {
   setOptions(arg1, arg2) {
     if (typeof arg2 === 'undefined') {
       const options = arg1;
-      this._options = { ...this._options, ...options };
+      Object.assign(this._options, options);
     } else {
       const subject = arg1;
       const options = arg2;
 
       if (this._options.byRequest[subject]) {
-        this._options.byRequest[subject] = {
-          ...this._options.byRequest[subject],
-          ...options
-        };
+        Object.assign(this._options.byRequest[subject], options);
       } else {
         this._options.byRequest[subject] = options;
       }

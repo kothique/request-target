@@ -1,4 +1,4 @@
-import RequestTarget from '../src';
+const RequestTarget = require('../src');
 
 describe('#on and #off', function () {
   beforeEach(function () {
