@@ -1,6 +1,6 @@
 {
   "name": "@kothique/request-target",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "It's like EventEmitter or EventTarget, but RequestTarget :}",
   "main": "dist/index.js",
   "scripts": {

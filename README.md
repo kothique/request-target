@@ -36,10 +36,10 @@ try {
 
 ##### `new RequestTarget(options = {})`
 
-- `options.callAllHandlers` `boolean?` `default: false` If `true`, call all handlers even if a result was received.
-- `options.getAllResults` `boolean?` `default: false` If `true`, results from all handlers are returned as an array on a request. Also, setting this option as `true` makes `options.callAllHandlers` `true` automatically.
-- `options.autoPromiseAll` `boolean?` `default: true` If `true` and `options.getAllResults` is `true`, automatically applies `Promise.all` to the result of `RequestTarget#request` if there are any promises.
-- `options.byRequest` `object?` The same options, but for specific requests.
+- `options.callAllHandlers` `boolean?` `default: false` If `true`, call all handlers even if a result was received
+- `options.getAllResults` `boolean?` `default: false` If `true`, results from all handlers are returned as an array on a request. Also, setting this option as `true` makes `options.callAllHandlers` `true` automatically
+- `options.autoPromiseAll` `boolean?` `default: true` If `true` and `options.getAllResults` is `true`, automatically applies `Promise.all` to the result of `RequestTarget#request` if there are any promises
+- `options.byRequest` `object?` The same options, but for specific requests
 
 ```js
 /* All request handlers will be evaluated except for 'first-response' request. */
@@ -53,14 +53,16 @@ const rt = new RequestTarget({
 
 ##### `setOptions(options): this`
 
-- `options` `object` Global options.
+- `options` `object` Global options
+- Returns: `this`
 
 Shallow merge a given options object with global options.
 
 ##### `setOptions(subject, options): this`
 
-- `subject` `string` Request subject.
-- `options` `object` Request options.
+- `subject` `string` Request subject
+- `options` `object` Request options
+- Returns: `this`
 
 Shallow merge a given options object with the options of the request with a given subject.
 
@@ -68,8 +70,9 @@ Shallow merge a given options object with the options of the request with a give
 
 Aliases: `addRequestHandler`, `addHandler`.
 
-- `subject` `string` The name of the request.
-- `handler` `(...any) => any` The handler can also return a `Promise`.
+- `subject` `string` The name of the request
+- `handler` `(...any) => any` The handler can also return a `Promise`
+- Returns: `this`
 
 Add a handler for a given request type. Return `this`.
 
@@ -77,20 +80,25 @@ Add a handler for a given request type. Return `this`.
 
 Aliases: `removeRequestHandler`, `removeHandler`.
 
-- `subject` `string` The name of the request.
-- `handler` `(...any) => any` The handler passed to `RequestTarget#on`.
+- `subject` `string` The name of the request
+- `handler` `(...any) => any` The handler passed to `RequestTarget#on`
+- Returns: `this`
 
 Remove a given request type's handler.
 
+##### `offAll([subject]): this`
+
+Aliases: `removeAllRequestHandlers`, `removeAllHandlers`.
+
+- `[subject]` `string` The name of the request
+- Returns: `this`
+
+Remove all handlers for a given request subject, or, if `subject` is not specified, remove all handlers regardless their request name.
+
 ##### `request(subject, ...args): any`
 
-- `subject` `string` The name of the request to send.
-- `args` `any[]` Payload to send with the request.
+- `subject` `string` The name of the request to send
+- `args` `any[]` Payload to send with the request
+- Returns: `Promise`
 
-Returns the result of the request on success, or throws an error. If there are
-multiple request handlers, they will be evaluated until the first defined value
-is returned or an error is thrown (unless `options.callAllHandlers` is set to `true`).
-If `options.getAllResults` is `true`, all results will be returned as an array; also, if
-`options.autoPromiseAll` is `true` and there is at least one promise returned from a handler,
-`Promise.all` will be automatically applie to the resulting array. If all handlers return `undefined`,
-or there are no handlers at all, returns `undefined`.
+Returns the result of the request on success, or throws an error. If there are multiple request handlers, they will be evaluated until the first defined value is returned or an error is thrown (unless `options.callAllHandlers` is set to `true`). If `options.getAllResults` is `true`, all results will be returned as an array; also, if `options.autoPromiseAll` is `true` and there is at least one promise returned from a handler, `Promise.all` will be automatically applie to the resulting array. If all handlers return `undefined`, or there are no handlers at all, returns `undefined`.

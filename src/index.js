@@ -89,6 +89,22 @@ class RequestTarget {
   removeHandler(subject, handler) { return this.off(subject, handler); }
 
   /**
+   * @param {string?} subject
+   * @return {this}
+   */
+  offAll(subject = null) {
+    if (subject) {
+      delete this._handlers[subject];
+    } else {
+      this._handlers = {};
+    }
+
+    return this;
+  }
+  removeAllRequestHandlers(subject = null) { return this.offAll(subject); }
+  removeAllHandlers(subject = null) { return this.offAll(subject); }
+
+  /**
    * @param {string} subject
    * @param {any[]}  args
    * @return {any} - Return undefined, if there are no request handlers.

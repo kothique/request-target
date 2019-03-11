@@ -16,4 +16,12 @@ describe('aliases', function () {
   it('#off === #removeHandler', function () {
     expect(RequestTarget.on).to.equal(RequestTarget.removeHandler);
   });
+
+  it('#offAll === #removeAllRequestHandlers', function () {
+    expect(RequestTarget.offAll).to.equal(RequestTarget.removeAllRequestHandlers);
+  });
+
+  it('#off === #removeAlltHandlers', function () {
+    expect(RequestTarget.offAll).to.equal(RequestTarget.removeAllHandlers);
+  });
 });

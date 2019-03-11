@@ -32,4 +32,29 @@ describe('#on and #off', function () {
     this.rt.off('meow', handler);
     expect(this.rt._handlers.meow).to.have.length(0);
   });
+
+  it(`#offAll removes all handlers for a given subject`, function () {
+    this.rt.on('meow', () =>{});
+    this.rt.on('meow', () =>{});
+    this.rt.on('meow', () =>{});
+
+    expect(this.rt._handlers).not.to.be.empty;
+    expect(this.rt._handlers.meow).to.exist.and.have.length(3);
+
+    this.rt.offAll('meow');
+    expect(this.rt._handlers.meow).not.to.exist;
+  });
+
+  it(`#offAll removes all handlers`, function () {
+    this.rt.on('meow', () =>{});
+    this.rt.on('bark', () =>{});
+    this.rt.on('meow', () =>{});
+
+    expect(this.rt._handlers).not.to.be.empty;
+    expect(this.rt._handlers.meow).to.exist.and.have.length(2);
+    expect(this.rt._handlers.bark).to.exist.and.have.length(1);
+
+    this.rt.offAll();
+    expect(this.rt._handlers).to.be.empty;
+  });
 });

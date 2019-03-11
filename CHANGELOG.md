@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.0
+
+- Add `#offAll` with aliases `#removeAllRequestHandlers` and `#removeAllHandlers`.
+
 ## 2.4.0
 
 - Add aliases `#addRequestHandler`, `#addHandler`, `#removeRequestHandler`, `#removeHandler`.
