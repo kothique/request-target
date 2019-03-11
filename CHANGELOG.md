@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- Add aliases `#addRequestHandler`, `#addHandler`, `#removeRequestHandler`, `#removeHandler`.
+
 ## 2.3.3
 
 - Remove all dependencies.

@@ -66,12 +66,16 @@ Shallow merge a given options object with the options of the request with a give
 
 ##### `on(subject, handler): this`
 
+Aliases: `addRequestHandler`, `addHandler`.
+
 - `subject` `string` The name of the request.
 - `handler` `(...any) => any` The handler can also return a `Promise`.
 
 Add a handler for a given request type. Return `this`.
 
 ##### `off(subject, handler): this`
+
+Aliases: `removeRequestHandler`, `removeHandler`.
 
 - `subject` `string` The name of the request.
 - `handler` `(...any) => any` The handler passed to `RequestTarget#on`.

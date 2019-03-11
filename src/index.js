@@ -66,6 +66,8 @@ class RequestTarget {
 
     return this;
   }
+  addRequestHandler(subject, handler) { return this.on(subject, handler); }
+  addHandler(subject, handler) { return this.on(subject, handler); }
 
   /**
    * @param {string}          subject
@@ -83,6 +85,8 @@ class RequestTarget {
 
     return this;
   }
+  removeRequestHandler(subject, handler) { return this.off(subject, handler); }
+  removeHandler(subject, handler) { return this.off(subject, handler); }
 
   /**
    * @param {string} subject
